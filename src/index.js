@@ -9,13 +9,8 @@ exports.handler = async (event, context) => {
   try {
     await connectDB();
 
-    app.get("/test", (req, res) => {
-      res.send("¡Hola, mundo!");
-    });
-
-    app.get("/test/:name", (req, res) => {
-      const { name } = req.params;
-      res.send(`¡Hola, ${name}!`);
+    app.post("/mailrelay-users", (req, res) => {
+      // TODO: Implementar la lógica para guardar un usuario en la base de datos
     });
 
     return serverless(app)(event, context);
