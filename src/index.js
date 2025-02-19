@@ -11,6 +11,7 @@ exports.handler = async (event, context) => {
 
     app.post("/mailrelay-users", (req, res) => {
       // TODO: Implementar la lógica para guardar un usuario en la base de datos
+      res.send("POST /mailrelay-users");
     });
 
     return serverless(app)(event, context);
