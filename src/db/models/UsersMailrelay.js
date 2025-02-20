@@ -20,6 +20,7 @@ const UsersMailrelaySchema = new mongoose.Schema({
     constitucion: Date,
     department: String,
     economic_activity: String,
+    email: String,
   },
   operation: {
     special_service: {
