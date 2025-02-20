@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 
-const UsersMailrelaySchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: String,
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
+  email: String,
   lname_p: String,
   lname_m: String,
   nacimiento: Date,
@@ -64,4 +60,4 @@ const UsersMailrelaySchema = new mongoose.Schema({
   },
 });
 
-exports.UsersMailrelay = mongoose.model("UsersMailrelay", UsersMailrelaySchema);
+exports.User = mongoose.model("User", UserSchema);
