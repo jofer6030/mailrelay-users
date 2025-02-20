@@ -29,20 +29,14 @@ const UsersMailrelaySchema = new mongoose.Schema({
     transac_contraparte: {
       origin_bank: String,
       destiny_bank: String,
-      type_operation: String,
     },
+    action: String,
     created_at: Date,
     updated_at: Date,
   },
   trigger: {
     type: String,
-    enum: [
-      "companyUpdate",
-      "operationSigned",
-      "userRegister",
-      "userUpdate",
-      "userUpdatePromo",
-    ],
+    enum: ["companyUpdate", "operationSigned", "userRegister", "userUpdate", "userUpdatePromo"],
     required: true,
   },
   status_trigger: {
