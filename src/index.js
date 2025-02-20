@@ -8,6 +8,7 @@ const {
 } = require("./controllers/usersMailrelayController");
 
 const app = express();
+app.use(express.json());
 
 exports.handler = async (event, context) => {
   try {

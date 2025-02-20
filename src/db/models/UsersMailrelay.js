@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const UsersMailrelaySchema = new mongoose.Schema({
   name: String,
-  email: String,
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   lname_p: String,
   lname_m: String,
   nacimiento: Date,
@@ -36,7 +40,13 @@ const UsersMailrelaySchema = new mongoose.Schema({
   },
   trigger: {
     type: String,
-    enum: ["companyUpdate", "operationSigned", "userRegister", "userUpdate", "userUpdatePromo"],
+    enum: [
+      "companyUpdate",
+      "operationSigned",
+      "userRegister",
+      "userUpdate",
+      "userUpdatePromo",
+    ],
     required: true,
   },
   status_trigger: {
