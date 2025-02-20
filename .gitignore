@@ -1,6 +1,5 @@
 node_modules
 .serverless
-serverless.yml
 ecosystem.js
 .gitlab-ci.yml
 .env.dev

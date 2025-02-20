@@ -1,0 +1,27 @@
+service: acomo-mailrelay
+
+plugins:
+  - serverless-offline
+
+custom:
+  stage: ${opt:stage, 'dev'}
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    MONGO_URI: ${env:MONGO_URI}
+    WEBHOOK_TI: ${env:WEBHOOK_TI}
+
+functions:
+  app:
+    handler: src/index.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: /{proxy+}
