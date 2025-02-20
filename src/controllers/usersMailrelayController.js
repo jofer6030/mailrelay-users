@@ -18,9 +18,30 @@ exports.updateUser = async (req, res) => {
     const { email } = req.params;
     const updateData = req.body;
 
-    const updatedUser = await Userlay.findOneAndUpdate({ email }, updateData, {
-      new: true,
-    });
+    console.log("🔹 Email recibido en params:", email);
+    console.log("🔹 Datos a actualizar:", updateData);
+
+    if (!email) {
+      return res.status(400).json({ message: "Falta el email en la URL" });
+    }
+
+    if (
+      updateData.status_trigger &&
+      !["PENDING", "COMPLETED"].includes(updateData.status_trigger)
+    ) {
+      return res.status(400).json({
+        message:
+          "El campo status_trigger solo puede ser 'PENDING' o 'COMPLETED'",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { $set: updateData },
+      { new: true }
+    );
+
+    console.log("🔹 Resultado de la actualización:", updatedUser);
 
     if (!updatedUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
@@ -31,7 +52,7 @@ exports.updateUser = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.error("Error al actualizar usuario:", error);
+    console.error("🚨 Error al actualizar usuario:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
