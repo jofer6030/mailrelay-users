@@ -76,6 +76,54 @@ propiedades:
 
 # Actualizar Usuario
 
+### **Propiedades permitidas**
+
+```json
+{
+  "is_active": true,
+  "name": "Nombre",
+  "lname_p": "Apellido Paterno",
+  "lname_m": "Apellido Materno",
+  "email": "example@example.com",
+  "nacimiento": "YYYY-MM-DD",
+  "department": "Lima",
+  "cellphone": "987654321",
+  "special_service": {}
+}
+```
+
+
+### **Condiciones necesarias**
+- El usuario debe tener `fullDocument.level` con el valor **"30"** (Persona Natural) o **"31"** (Persona Jurídica).
+- El usuario debe haber aceptado contenido promocional previamente (`fullDocumentBeforeChange.content_promo: true`).
+
+### **Casos Especiales**
+- **Cambio de estado o aceptación de contenido promocional:** Asegúrate de enviar `is_active` o `content_promo`.
+- **Asignación de tarifa especial:** Debes enviar `special_service`.
+- **Personas jurídicas (`level !== 30`)**: Los cambios relevantes se gestionan en `updateLegalPerson`, donde puedes actualizar propiedades como `commercial_name`, `economic_activity`, `constitucion`, etc.
+
+
+
+# Actualizar userUpdatePromo
+
+### **Propiedades permitidas**
+
+```json
+"fullDocument": {
+    "_id": "6529b4e3d1e5f3a2b8c10f67",
+    "level": "30",
+    "email": "usuario@example.com",
+    "is_active": true,
+    "content_promo": true,
+    "special_service": "premium"
+  }
+```
+
+Para que el request active el flujo correctamente, debe incluir:    
+    ✅ operationType: `"UPDATE" `   
+    ✅ fullDocument.level: `"30" o "31"`  
+    ✅ fullDocument.email: Correo del usuario   
+    ✅ updateDescription.updatedFields.content_promo: Debe estar presente y cambiar de valor
 # Operation Signed
 
 Aqui varia el email dependiendo del level del usuario es 31 o 32 se necesita el email de la
