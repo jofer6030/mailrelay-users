@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
     await connectDB();
 
     app.post("/mailrelay-users", createUser);
-    app.patch("/mailrelay-users/:email", updateUser);
+    app.patch("/mailrelay-users/:id", updateUser);
 
     return serverless(app)(event, context);
   } catch (error) {

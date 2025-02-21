@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { User } = require("../db/models/UsersMailrelay");
 
 const validateUserData = (data) => {
@@ -54,20 +55,23 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { email } = req.params;
-    if (!email) {
-      return res.status(400).json({ message: "Falta el email en la URL" });
+    const { id } = req.params;
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(400)
+        .json({ message: "ID de usuario inválido o faltante" });
     }
 
-    const errors = validateUserData(req.body);
-    if (errors.length) {
+    const errors = validateUserData ? validateUserData(req.body) : [];
+    if (errors.length > 0) {
       return res.status(400).json({ message: "Datos inválidos", errors });
     }
 
-    const updatedUser = await User.findOneAndUpdate(
-      { email },
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
       { $set: req.body },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedUser) {
@@ -80,6 +84,8 @@ exports.updateUser = async (req, res) => {
     });
   } catch (error) {
     console.error("🚨 Error al actualizar usuario:", error);
-    res.status(500).json({ message: "Error en el servidor" });
+    res
+      .status(500)
+      .json({ message: "Error en el servidor", error: error.message });
   }
 };
