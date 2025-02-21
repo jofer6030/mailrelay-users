@@ -1,27 +1,9 @@
-const { UsersMailrelay } = require("../db/models/UsersMailrelay");
+const { User } = require("../db/models/UsersMailrelay");
 
 exports.createUser = async (req, res) => {
-  console.log(req.body);
   try {
-    if (!UsersMailrelay || !UsersMailrelay.findOne) {
-      throw new Error("Modelo UsersMailrelay no está definido correctamente");
-    }
-
-    if (!req.body.email) {
-      return res.status(400).json({ message: "El campo email es requerido" });
-    }
-
-    const existingUser = await UsersMailrelay.findOne({
-      email: req.body.email,
-    });
-
-    if (existingUser) {
-      return res.status(400).json({ message: "El usuario ya existe" });
-    }
-
-    const newUser = new UsersMailrelay(req.body);
+    const newUser = new User(req.body);
     await newUser.save();
-
     res
       .status(201)
       .json({ message: "Usuario creado exitosamente", data: newUser });
@@ -32,16 +14,34 @@ exports.createUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  console.log(req);
   try {
     const { email } = req.params;
     const updateData = req.body;
 
-    const updatedUser = await UsersMailrelay.findOneAndUpdate(
+    console.log("🔹 Email recibido en params:", email);
+    console.log("🔹 Datos a actualizar:", updateData);
+
+    if (!email) {
+      return res.status(400).json({ message: "Falta el email en la URL" });
+    }
+
+    if (
+      updateData.status_trigger &&
+      !["PENDING", "COMPLETED"].includes(updateData.status_trigger)
+    ) {
+      return res.status(400).json({
+        message:
+          "El campo status_trigger solo puede ser 'PENDING' o 'COMPLETED'",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
       { email },
-      updateData,
+      { $set: updateData },
       { new: true }
     );
+
+    console.log("🔹 Resultado de la actualización:", updatedUser);
 
     if (!updatedUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
@@ -52,7 +52,7 @@ exports.updateUser = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.error("Error al actualizar usuario:", error);
+    console.error("🚨 Error al actualizar usuario:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
