@@ -44,6 +44,7 @@ propiedades:
 ```json
 {
   "email": "example@example.com",
+  "email_before": "example@example.com",
   "name": "Nombre",
   "nacimiento": "YYYY-MM-DD",
   "department": "Departamento",
@@ -63,7 +64,8 @@ propiedades:
 ```json
 {
   "_id": "unique_user_id",
-  "content_promo": true
+  "content_promo": true,
+  "email_before": "example@example.com"
 }
 ```
 
@@ -85,6 +87,7 @@ propiedades:
   "lname_p": "Apellido Paterno",
   "lname_m": "Apellido Materno",
   "email": "example@example.com",
+  "email_before": "example@example.com",
   "nacimiento": "YYYY-MM-DD",
   "department": "Lima",
   "cellphone": "987654321",
@@ -117,6 +120,7 @@ propiedades:
     "_id": "6529b4e3d1e5f3a2b8c10f67",
     "level": "30",
     "email": "usuario@example.com",
+    "email_before": "example@example.com",
     "is_active": true,
     "content_promo": true,
     "special_service": "premium"
@@ -143,6 +147,7 @@ compañia, sino solo el email del usuario
     "email": "example-company@example.com"
   },
   "email": "example@example.com",
+  "email_before": "example@example.com",
   "operation": {
     "transac_contraparte": {
       "origin_bank": "",
@@ -160,6 +165,7 @@ compañia, sino solo el email del usuario
 {
   "_id": "unique_user_id",
   "level": "",
+  "email_before": "example@example.com",
   "company": {
     "_id": "unique_company_id",
     "email": "example-company@example.com",
