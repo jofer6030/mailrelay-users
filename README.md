@@ -92,17 +92,21 @@ propiedades:
 }
 ```
 
-
 ### **Condiciones necesarias**
-- El usuario debe tener `fullDocument.level` con el valor **"30"** (Persona Natural) o **"31"** (Persona Jurídica).
-- El usuario debe haber aceptado contenido promocional previamente (`fullDocumentBeforeChange.content_promo: true`).
+
+- El usuario debe tener `fullDocument.level` con el valor **"30"** (Persona Natural) o **"31"**
+  (Persona Jurídica).
+- El usuario debe haber aceptado contenido promocional previamente
+  (`fullDocumentBeforeChange.content_promo: true`).
 
 ### **Casos Especiales**
-- **Cambio de estado o aceptación de contenido promocional:** Asegúrate de enviar `is_active` o `content_promo`.
+
+- **Cambio de estado o aceptación de contenido promocional:** Asegúrate de enviar `is_active` o
+  `content_promo`.
 - **Asignación de tarifa especial:** Debes enviar `special_service`.
-- **Personas jurídicas (`level !== 30`)**: Los cambios relevantes se gestionan en `updateLegalPerson`, donde puedes actualizar propiedades como `commercial_name`, `economic_activity`, `constitucion`, etc.
-
-
+- **Personas jurídicas (`level !== 30`)**: Los cambios relevantes se gestionan en
+  `updateLegalPerson`, donde puedes actualizar propiedades como `commercial_name`,
+  `economic_activity`, `constitucion`, etc.
 
 # Actualizar userUpdatePromo
 
@@ -119,11 +123,12 @@ propiedades:
   }
 ```
 
-Para que el request active el flujo correctamente, debe incluir:    
-    ✅ operationType: `"UPDATE" `   
-    ✅ fullDocument.level: `"30" o "31"`  
-    ✅ fullDocument.email: Correo del usuario   
-    ✅ updateDescription.updatedFields.content_promo: Debe estar presente y cambiar de valor
+Para que el request active el flujo correctamente, debe incluir:  
+ ✅ operationType: `"UPDATE" `  
+ ✅ fullDocument.level: `"30" o "31"`  
+ ✅ fullDocument.email: Correo del usuario  
+ ✅ updateDescription.updatedFields.content_promo: Debe estar presente y cambiar de valor
+
 # Operation Signed
 
 Aqui varia el email dependiendo del level del usuario es 31 o 32 se necesita el email de la
@@ -145,6 +150,24 @@ compañia, sino solo el email del usuario
     },
     "action": "",
     "created_at": ""
+  }
+}
+```
+
+# Company Update
+
+```json
+{
+  "_id": "unique_user_id",
+  "level": "",
+  "company": {
+    "_id": "unique_company_id",
+    "email": "example-company@example.com",
+    "commercial_name": "",
+    "economic_activity": "",
+    "constitucion": "",
+    "department": "",
+    "cellphone": ""
   }
 }
 ```
