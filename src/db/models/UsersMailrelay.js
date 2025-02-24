@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
   cellphone: String,
   department: String,
   is_active: Boolean,
+  is_active_fields: Boolean,
   content_promo: Boolean,
   company: {
     commercial_name: String,
